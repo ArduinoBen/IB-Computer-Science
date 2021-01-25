@@ -1,0 +1,16 @@
+WEIGHT = input ("Please input your weight in Kilograms")
+HEIGHT = input ("Please input your height in meters")
+
+If WEIGHT > 0 then continue
+	else WEIGHT = input ("Please reenter your weight in Kilograms, your previous value was out of bounds")
+	
+If HEIGHT > 0 then continue
+	else HEIGHT + input ("Please reenter your height in meters, your previous value was out of bounds")
+	
+BMI = WEIGHT / HEIGHT^2
+
+If BMI <= 18.5 and BMI => 25 then print ("You are of a healthy weight for your height, your BMI is ",BMI,".")
+	else If BMI > 18.5 then print ("You are underweight, your BMI is ",BMI,", which is below the threshold of 18.5")
+		else print ("You are overweight, your BMI is ",BMI,", which is below the threshold of 25")
+		
+exit

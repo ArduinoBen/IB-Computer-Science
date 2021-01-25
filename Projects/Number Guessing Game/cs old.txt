@@ -1,0 +1,15 @@
+void start {
+		
+		SCORE = 0
+		#GUESS_COUNT = 0
+		int USER_NUM
+		int RAND_NUM
+			}
+
+loop while GUESS_COUNT <= 10
+	{
+		RAND_NUM = Randomly generated number >=1, <=100
+		Print "Please type in your guess"
+		Recieve input and assign value to USER_NUM
+		
+		

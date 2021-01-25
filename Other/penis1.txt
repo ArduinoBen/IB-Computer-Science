@@ -1,0 +1,9 @@
+            while (ConversionSuccessful == false)  //time input
+            {
+                Console.WriteLine("Please enter the current hour (e.g. 17:34 -> 17");
+                ConversionSuccessful = Int32.TryParse(Console.ReadLine(), out CurrentTime);  //also check for data within bounds
+                if (ConversionSuccessful == false)
+                {
+                    Console.WriteLine("Invalid input, please retry");
+                }
+            }

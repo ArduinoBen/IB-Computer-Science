@@ -1,0 +1,10 @@
+Intialize program {Initialize variables}
+					
+Loop while GUESS_COUNT >= 10
+			{
+GUESS = input("Pick a number for your guess between 1 and 100")
+RAND_NUM = Random Number (1~100)
+If USER_SCORE == RAND_NUM
+	then {set USER_SCORE = USER_SCORE + 1, input("do you wish to play again"), true -> set GUESS_COUNT = 0, false -> exit program}
+	else {GUESS_COUNT = GUESS_COUNT + 1}
+			}

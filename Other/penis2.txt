@@ -1,0 +1,267 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Parking_Problem
+{
+
+    class Program
+    {
+        static bool Mod11Check(int FPN)
+        {
+            //int FPN;
+            IEnumerable<int> Digits = Enumerable.Range(1, (FPN.ToString().Length) );  //removed -1
+            int Weight = FPN.ToString().Length + 1;  //value unchanged
+            int FPNMod;  //stores last digit
+            int FPNSum = 0;
+
+            foreach (int num in Digits)
+            {
+                Console.WriteLine("performing check verification");  //testing
+                //FPNMod = FPN % 10;
+                FPNMod = FPN % 10;
+                FPNSum = FPNSum + FPNMod * Weight;
+                FPN = FPN / 10;
+                Weight = Weight - 1;
+                Console.WriteLine("Testing data");  //testing
+                Console.WriteLine("FPN: " + FPN);  //testing
+                Console.WriteLine("Sum: " + FPNSum);//testing
+                Console.ReadKey();  //testing
+            }
+            int OutputValue = FPNSum % 11;
+            Console.WriteLine(OutputValue);
+            if (OutputValue == 9)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        static int TimeInput()
+        {
+            bool ConversionSuccessful = false;
+            int CurrentTime = 0;
+
+            while (ConversionSuccessful == false)  //time input
+            {
+                Console.WriteLine("\nPlease enter the current hour (e.g. 17:34 -> 17");
+                ConversionSuccessful = Int32.TryParse(Console.ReadLine(), out CurrentTime);  //also check for data within bounds
+                if (ConversionSuccessful == false)
+                {
+                    Console.WriteLine("Invalid input, please retry.\nRemeber to only enter the hour\n.");
+                }
+            }
+
+            return CurrentTime;
+        }
+
+        static int[] ParkingCost (int HourlyPrice, int MaxParkLength)
+        {
+            int ParkLength = 0;
+            int ParkCost;
+            bool ConversionSuccessful = false;
+
+            while (!ConversionSuccessful)
+            {
+                Console.WriteLine("How many hours do you wish to park for?\nParking is billed by the hour.\n");  //check park time within bounds
+                ConversionSuccessful = Int32.TryParse(Console.ReadLine(), out ParkLength);
+                if (ParkLength > MaxParkLength)
+                {
+                    Console.WriteLine("\nSorry, you cannot park for that long!");
+                    ConversionSuccessful = false;
+
+                }
+                if (ConversionSuccessful == false)
+                {
+                    Console.WriteLine("\nInvalid input, please retry.\nRemeber to only enter the hour.\n");
+                }
+            }
+
+            ParkCost = ParkLength * HourlyPrice;
+            int[] DataOut = {ParkCost, ParkLength};
+            return DataOut;
+        }
+
+        static void Main(string[] args)
+        {
+            //testing
+            //Console.WriteLine("Please enter the check digit");
+            //int FPNTest;
+            //bool FPNConvertedTesting = Int32.TryParse(Console.ReadLine(), out FPNTest);
+            ////int outputvalue = Mod11Check(FPNTest);
+            //Console.WriteLine("Checksum result");
+            //Console.WriteLine(Mod11Check(FPNTest));
+            //if (Mod11Check(FPNTest) == true)
+            //{
+            //    Console.WriteLine("FPN valid.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("FPN Invalid!");
+            //}
+            //Console.ReadKey();
+            //System.Windows.Forms.Application.Exit();
+
+
+            //main program!
+
+            bool DaySet = false;
+            bool DayPicked = false;
+            string DayOfTheWeek = "temp";  //temp
+            bool ConversionWithinBounds = false;
+            bool TimeSet = false;
+            bool ConversionSuccessful = false;
+            int HourlyPrice;
+            int MaxParkLength;  //include time to closing time if not at start
+            int CurrentTime = 0;
+            int ParkCost;
+            int ParkLength;
+            int[] ParkingInfo;
+
+            Console.WriteLine("Welcome to the parking fee calculator.\n");
+
+            while (!DayPicked)
+            {
+                Console.WriteLine("Please enter the current day of the week");
+                DayOfTheWeek = Console.ReadLine();
+                switch (DayOfTheWeek)
+                {
+                    case "monday":
+                    case "tuesday":
+                    case "wednesday":
+                    case "thursday":
+                    case "friday":  //ask time before date?  as midnight - 8 is unavailable every day
+
+                        //while (ConversionSuccessful == false)  //time input
+                        //{
+                        //    Console.WriteLine("\nPlease enter the current hour (e.g. 17:34 -> 17");
+                        //    ConversionSuccessful = Int32.TryParse(Console.ReadLine(), out CurrentTime);  //also check for data within bounds
+                        //    if (ConversionSuccessful == false)
+                        //    {
+                        //        Console.WriteLine("Invalid input, please retry.\nRemeber to only enter the hour\n.");
+                        //    }
+                        //}
+
+                        CurrentTime = TimeInput();
+
+                        switch (CurrentTime)
+                        {
+                            case int n when n < 8:
+                                Console.WriteLine("n < 8");
+                                Console.WriteLine("Sorry, this parking lot opens at 8am, please come back later.");
+                                Console.ReadKey();
+                                System.Windows.Forms.Application.Exit();//option to go back?
+                                break;
+                            case int n when n >= 8 & n < 16:
+                                Console.WriteLine("The current price per hour of parking is $2 per hour");
+                                Console.WriteLine("You can park for up to 2 hours");
+                                HourlyPrice = 2;
+                                MaxParkLength = 2;
+                                ParkingInfo = ParkingCost(HourlyPrice, MaxParkLength);
+                                ParkCost = ParkingInfo[0];
+                                ParkLength = ParkingInfo[1];
+
+                                Console.WriteLine("You are allocated " + ParkLength + " hours of parking, which will cost $" + ParkCost + ".");  //ask for confirmation
+
+                                DayPicked = true;
+
+                                //Console.WriteLine("ParkCost = " + ParkCost);  //ask for confirmation?
+                                //Console.WriteLine("ParkLength = " + ParkLength);  //change for final
+                                //Console.ReadKey();  //testing
+
+                                //Console.ReadKey();
+                                //System.Windows.Forms.Application.Exit();
+                                break;
+                            default:
+                                Console.WriteLine("Error, please retry.");
+                                Console.ReadKey();
+                                System.Windows.Forms.Application.Exit();
+                                break;
+                        }
+                        break;
+                    case "saturday":
+                        CurrentTime = TimeInput();
+                        break;
+                    case "sunday":
+                        CurrentTime = TimeInput();
+                        break;
+                    default:
+                        Console.WriteLine("\nInput invalid, please try again.");
+                        break;
+                }
+            }
+
+
+            //int CurrentTime;  //should work
+
+            //int CurrentTime = 0;  //temp fix
+            //string DayOfTheWeek = "temp";  //temp fix
+
+            while (TimeSet == false)
+            {
+                if (ConversionSuccessful == true)
+                {
+                    //perform bounds check
+                    if (CurrentTime >= 0 & CurrentTime <= 24)
+                    {
+                        TimeSet = true;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Your value is out of bounds, please enter an hour/time between 0 and 24");
+                        ConversionSuccessful = Int32.TryParse(Console.ReadLine(), out CurrentTime);
+                    }
+                }
+                else
+                {
+                    //return int conversion error to user
+                    Console.WriteLine("Failed to process your input, please make sure you enter the current hour in number form, e.g. 15:37 -> 15");
+                    ConversionSuccessful = Int32.TryParse(Console.ReadLine(), out CurrentTime);
+                }
+            }
+
+            bool CodeUsed = false;
+            bool FPNConverted = false;
+            int FPN;
+
+            Console.WriteLine("If eligible, please enter your Frequent Parking Number");
+            FPNConverted = Int32.TryParse(Console.ReadLine(), out FPN);
+
+            Console.WriteLine(FPNConverted);  //testing
+            Console.WriteLine(FPN);  //testing
+            Console.ReadKey();
+
+            Console.WriteLine("initialize array");  //testing
+
+            IEnumerable<int> Digits = Enumerable.Range(1, (FPNConverted.ToString().Length) + 2);  //removed -1
+            int Weight = FPNConverted.ToString().Length + 3;
+            int FPNMod;  //stores last digit
+            int FPNSum = 0;
+            //int FPNMod;  //temp disable fix
+
+            foreach (int num in Digits)
+            {
+                Console.WriteLine("performing check verification");  //testing
+                //FPNMod = FPN % 10;
+                FPNMod = FPN % 10;
+                FPNSum = FPNSum + FPNMod * Weight;
+                FPN = FPN / 10;
+                Weight = Weight - 1;
+                Console.WriteLine("Testing data");  //testing
+                Console.WriteLine("FPN: " + FPN);  //testing
+                Console.WriteLine("Sum: " + FPNSum);//testing
+                Console.ReadKey();  //testing
+            }
+
+            FPNMod = FPNSum % 11;
+            Console.WriteLine(FPNMod);
+
+        }
+    }
+}

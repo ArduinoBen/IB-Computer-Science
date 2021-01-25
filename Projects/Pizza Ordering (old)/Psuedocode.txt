@@ -1,0 +1,6 @@
+PIZZA_SIZE = input("What sized pizza would you like?  Please input the number of the 
+		1.Small ($1.0)
+		2.Medium ($1.5)
+		3.Large ($2.0)
+					)
+PRICE = 1 + 0.5(PIZZA_SIZE - 1)		

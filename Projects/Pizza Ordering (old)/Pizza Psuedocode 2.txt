@@ -1,0 +1,22 @@
+toppings = [Pepperoni, Chicken, Cajun Chicken, Mushrooms, Red Onions, Sweetcorn, Ham, Spicy minced Beef, Anchovies, Tuna, Peppers, Jalepenos, Cheese, Green chillies]
+int numoftoppings
+int pizzasize  //1.small 2.medium 3.large
+bool toppingscomplete = false
+
+pizzasize = input("What size of pizza would you like?/n1.Small/n2.Medium/n3.Large")
+
+loop while (pizzasize <= 1 | pizzasize >= 3 | pizzasize.isinteger == false)
+{
+	if(pizzasize >= 1 | pizzasize <= 3)
+		{print("Size selected")}
+	else
+		{pizzasize = input("Please reenter the size of your pizza./n1.Small/n2.Medium/n3.Large")
+}	
+
+//input("What toppings would you like to order on your pizza",toppings)
+//if 
+
+loop while (toppingcomplete == false)
+{
+	input("Type the name of our of our toppings to add it to your pizza/n",toppings,"/nType /"Done/" to complete your order")
+	
